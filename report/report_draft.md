@@ -1,93 +1,28 @@
-# Phishing Attack Detection using Machine Learning — Report Draft
+# Phishing Attack Detection using Machine Learning — Final Project Report
 
-## Executive Summary
+## Selected Source
 
-This project critically evaluates the GitHub tutorial/repository **Phishing Attack Detection using Machine Learning** by RimTouny. The selected source addresses a binary cybersecurity classification problem: deciding whether a URL is phishing or benign. The original project uses a large URL feature dataset and trains multiple machine-learning models.
+The selected source for this project is the GitHub repository “Phishing Attack Detection using Machine Learning” by RimTouny.
 
-The reproduction study focuses not only on model performance but also on whether the author's claims are supported by the available code, data, and evaluation methodology. A major finding at the beginning of the reproduction is that the final processed dataset is not included in the repository, and the notebook loads it from a local Windows path. This creates a reproducibility limitation and suggests that some preprocessing steps may be hidden.
+Original GitHub repository:  
+https://github.com/RimTouny/Phishing-Attack-Detection-using-Machine-Learning
+
+The project belongs to the field of Data Science in Cybersecurity, specifically phishing detection. This topic is relevant to the course because phishing detection is one of the cybersecurity problems in which data science and machine learning can be used to detect malicious behavior.
+
+The selected source clearly defines a cybersecurity problem, proposes a machine learning-based solution, provides an implementation in a GitHub repository, and describes the use of URL-based features and datasets for model training and evaluation.
+
+---
 
 ## 1. Summary of the Source
 
-### Problem
-Phishing attacks attempt to deceive users into visiting malicious websites and submitting sensitive information. The project tries to detect phishing URLs automatically.
+The selected source addresses the problem of phishing URL detection. Phishing is a cyberattack technique in which attackers create fake websites or malicious URLs that appear legitimate in order to trick users into revealing sensitive information such as passwords, personal details, or financial credentials.
 
-### Why the Problem Is Important
-In phishing detection, a false negative can allow a malicious URL to reach a user, while a false positive can block legitimate access. Therefore, evaluation must consider precision, recall, F1, MCC, ROC-AUC, and confusion matrices, not only accuracy.
+The problem is important because phishing attacks are common and can cause serious damage to users and organizations. If a phishing URL is not detected, users may enter private information into a fake website. Therefore, an automated phishing detection system can help reduce the risk of such attacks.
 
-### Proposed Solution
-The author proposes extracting lexical/statistical URL features and training classification models to distinguish phishing URLs from benign URLs.
+The proposed solution is based on machine learning. The author extracts features from URLs and uses them to train classification models that distinguish between phishing URLs and benign URLs. The task is a binary classification problem, where each URL is classified as either phishing or benign.
 
-### Dataset
-The original README states that the dataset combines:
-- PhishStorm URL dataset
-- ISCX-URL2016 dataset
-- Malicious URL dataset from Kaggle
+The features used in the project include URL-based characteristics such as URL length, domain length, number of digits, number of letters, number of special characters, entropy, encoding indicators, and other suspicious patterns. These features are meaningful because phishing URLs often contain unusual structures, long strings, suspicious domains, or encoded characters.
 
-The processed notebook output shows approximately 737,032 rows and 26 columns.
+According to the project description, the dataset is built from several URL datasets and contains a large number of URLs. The original notebook shows a dataset of approximately 737,000 samples and 26 columns. The target variable is the label, where phishing and benign URLs are represented as two different classes.
 
-### Models / Methodology
-The original project uses LazyClassifier and several ML models, plus ensemble methods such as stacking and voting.
-
-## 2. Critical Evaluation
-
-### Main Claims
-The author claims that the project advances phishing defense using ML models trained on a large and diverse URL dataset.
-
-### Evidence and Support
-The repository includes a notebook and README, but the final CSV dataset is not included. The notebook uses a local path:
-`E:\data\data_Features (2).csv`
-
-This weakens reproducibility.
-
-### Weaknesses / Limitations
-- Dataset not directly available in the repository.
-- Hidden preprocessing may exist.
-- Some dependencies are heavy and version-sensitive.
-- The feature `malicious_probability` may require careful investigation because it could introduce information leakage if it was computed using an external classifier or label-related information.
-- No temporal features are available, so temporal drift cannot be evaluated directly.
-
-## 3. Feature Engineering Analysis
-
-The dataset contains URL-based features:
-- length/count features: `url_length`, `domain_length`, `digits`, `letters`, `path_count`
-- boolean indicators: `ipv`, `short`, `is_encoded`, `sus`
-- calculated features: `entropy`, `ratio`, `malicious_probability`
-
-These features are meaningful for phishing detection because phishing URLs often use obfuscation, unusual characters, long paths, digits, and suspicious domain patterns.
-
-## 4. Reproducibility Analysis
-
-The original code cannot be executed directly unless the missing processed CSV is supplied. The repository contains a notebook, README, and license, but not the final feature CSV. Therefore, reproduction requires either downloading the original raw datasets and recreating the features, or obtaining the author's processed dataset.
-
-## 5. Experimental Results
-
-To be completed after running the starter notebook.
-
-Suggested models:
-- Logistic Regression
-- Random Forest
-- HistGradientBoosting
-
-Suggested metrics:
-- Accuracy
-- Precision
-- Recall
-- F1
-- MCC
-- ROC-AUC
-- Confusion Matrix
-
-## 6. Error Analysis
-
-To be completed after running the starter notebook.
-
-Discuss:
-- false positives: benign URLs blocked as phishing
-- false negatives: phishing URLs missed by the model
-- why false negatives are more dangerous in phishing defense
-- whether changing the decision threshold improves the security trade-off
-
-## 7. Conclusions
-
-Initial conclusion:
-The source is relevant and useful for the course project, but it has reproducibility weaknesses. The chosen project is still a good selection because it allows a strong critical evaluation, especially around missing data, hidden preprocessing, feature leakage, and proper cybersecurity metrics.
+The methodology of the original project includes data preparation, feature extraction, exploratory data analysis, feature selection, handling class imbalance, training multiple machine learning models, and evaluating their performance using classification metrics such as accuracy, precision, recall, F1-score, and confusion matrix.
