@@ -6,8 +6,14 @@ This script provides a simple reproducible command-line entry point.
 """
 
 from pathlib import Path
+import sys
 
 from sklearn.model_selection import train_test_split
+
+
+# Make sure the project root is available for importing from src/
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(PROJECT_ROOT))
 
 from src.preprocessing import load_dataset, prepare_feature_matrix
 from src.models import get_models
@@ -19,8 +25,8 @@ RANDOM_STATE = 42
 
 def main():
     """Run preprocessing, train models, evaluate them, and save results."""
-    dataset_path = Path("data/dataset_phishing.csv")
-    results_dir = Path("results")
+    dataset_path = PROJECT_ROOT / "data" / "dataset_phishing.csv"
+    results_dir = PROJECT_ROOT / "results"
     results_dir.mkdir(exist_ok=True)
 
     print("Loading dataset...")
