@@ -1,0 +1,57 @@
+"""
+Optional script for running the phishing detection experiment.
+
+The notebook is still the main implementation file.
+This script provides a simple reproducible command-line entry point.
+"""
+
+from pathlib import Path
+
+from sklearn.model_selection import train_test_split
+
+from src.preprocessing import load_dataset, prepare_feature_matrix
+from src.models import get_models
+from src.evaluation import evaluate_models
+
+
+RANDOM_STATE = 42
+
+
+def main():
+    """Run preprocessing, train models, evaluate them, and save results."""
+    dataset_path = Path("data/dataset_phishing.csv")
+    results_dir = Path("results")
+    results_dir.mkdir(exist_ok=True)
+
+    print("Loading dataset...")
+    data = load_dataset(dataset_path)
+
+    print("Preparing feature matrix...")
+    X, y, preprocessing_info = prepare_feature_matrix(data)
+
+    print("Preprocessing info:")
+    print(preprocessing_info)
+
+    print("Splitting data...")
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.20,
+        random_state=RANDOM_STATE,
+        stratify=y
+    )
+
+    print("Training and evaluating models...")
+    models = get_models(random_state=RANDOM_STATE)
+    results_df = evaluate_models(models, X_train, X_test, y_train, y_test)
+
+    output_path = results_dir / "model_metrics_from_script.csv"
+    results_df.to_csv(output_path, index=False)
+
+    print("Experiment completed.")
+    print(f"Results saved to: {output_path}")
+    print(results_df)
+
+
+if __name__ == "__main__":
+    main()
